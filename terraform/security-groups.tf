@@ -45,6 +45,17 @@ resource "aws_security_group" "mongodb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "MongoDB from Kubernetes private subnets"
+    from_port   = 27017
+    to_port     = 27017
+    protocol    = "tcp"
+    cidr_blocks = [
+      "10.0.11.0/24",
+      "10.0.12.0/24"
+    ]
+  }
+
   egress {
     description = "Outbound traffic"
     from_port   = 0

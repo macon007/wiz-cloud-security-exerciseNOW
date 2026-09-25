@@ -52,3 +52,32 @@ resource "aws_iam_instance_profile" "mongodb" {
     Name = "wiz-now-mongodb-profile"
   }
 }
+
+
+
+
+resource "aws_iam_role_policy" "mongodb_s3_backup" {
+  name = "wiz-now-mongodb-s3-backup"
+  role = aws_iam_role.mongodb.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+
+    Statement = [
+      {
+        Effect = "Allow"
+
+        Action = [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:ListBucket"
+        ]
+
+        Resource = [
+          aws_s3_bucket.mongodb_backup.arn,
+          "${aws_s3_bucket.mongodb_backup.arn}/*"
+        ]
+      }
+    ]
+  })
+}
