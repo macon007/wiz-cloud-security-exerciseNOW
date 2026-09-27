@@ -8,7 +8,7 @@ resource "aws_instance" "mongodb" {
     aws_security_group.mongodb.id
   ]
 
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   iam_instance_profile        = aws_iam_instance_profile.mongodb.name
   tags = {
     Name = "wiz-now-mongodb"
