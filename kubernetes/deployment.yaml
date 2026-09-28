@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wiz-webapp
+  namespace: wiz-exercise
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wiz-webapp
+  template:
+    metadata:
+      labels:
+        app: wiz-webapp
+    spec:
+      serviceAccountName: wiz-webapp
+      containers:
+        - name: webapp
+          image: 309509180673.dkr.ecr.ap-southeast-2.amazonaws.com/wiz-now-webapp:v1
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URI
+              value: "mongodb://wizapp:WizExercise123!@10.0.1.39:27017/wizapp?authSource=wizapp"
+            - name: MONGO_DB
+              value: "wizapp"
