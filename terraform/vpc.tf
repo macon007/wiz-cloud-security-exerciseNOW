@@ -36,7 +36,19 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "wiz-now-public-${count.index + 1}"
+
+
+
+
+    Name                     = "wiz-now-public-${count.index + 1}"
+    "kubernetes.io/role/elb" = "1"
+
+
+
+
+
+
+
   }
 }
 
@@ -230,5 +242,20 @@ resource "aws_vpc_endpoint" "ec2" {
 
   tags = {
     Name = "wiz-now-ec2-endpoint"
+  }
+}
+
+# Elastic Load Balancing API
+resource "aws_vpc_endpoint" "elasticloadbalancing" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.ap-southeast-2.elasticloadbalancing"
+  vpc_endpoint_type   = "Interface"
+  private_dns_enabled = true
+  subnet_ids          = aws_subnet.private[*].id
+
+  security_group_ids = [aws_security_group.vpc_endpoints.id]
+
+  tags = {
+    Name = "wiz-now-elasticloadbalancing-endpoint"
   }
 }
