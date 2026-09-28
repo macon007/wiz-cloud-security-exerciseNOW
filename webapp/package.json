@@ -1,0 +1,13 @@
+{
+  "name": "wiz-now-webapp",
+  "version": "1.0.0",
+  "description": "Wiz cloud security exercise web application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0"
+  }
+}
